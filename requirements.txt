@@ -1,0 +1,5 @@
+qiskit==2.1.0
+matplotlib==3.10.3
+numpy==2.3.0
+pylatexenc==2.10
+qutip==5.2.0
