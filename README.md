@@ -11,4 +11,5 @@ This repository is for documenting my attempt to implement some of the most well
 
 ## Classic Algorithms
 
-- Deutsch's Algorithm: Implementing Deutsch's Algorithm.
+- [Deutsch's Algorithm](1_classic_algorithms/0_deutsch.py): Implementing Deutsch's Algorithm.
+- Deutsch-Jozsa Algorithm: Implementing the Deutsch-Jozsa Algorithm.
