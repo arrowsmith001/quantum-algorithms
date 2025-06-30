@@ -43,23 +43,32 @@ from qutip import Bloch
 # Note: bit flipping is also known as the "not" operation
 # Note: the right bit is the least significant bit, so in the below circuits indexing is done right-to-left (the right bit is the 1st bit, and the left bit is the 2nd bit).
 
-def U_f0(qc: QuantumCircuit):
-    pass
+def U_f0():
+    subcircuit = QuantumCircuit(QuantumRegister(2))
+    subcircuit.id(0)
+    subcircuit.id(1)
+    return subcircuit.to_gate(label='U_f0')
 
-def U_f1(qc: QuantumCircuit):
-    qc.cx(0, 1)
+def U_f1():
+    subcircuit = QuantumCircuit(QuantumRegister(2))
+    subcircuit.cx(0, 1)
+    return subcircuit.to_gate(label='U_f1')
 
-def U_f2(qc: QuantumCircuit):
-    qc.cx(0, 1)
-    qc.x(1)
+def U_f2():
+    subcircuit = QuantumCircuit(QuantumRegister(2))
+    subcircuit.cx(0, 1)
+    subcircuit.x(1)
+    return subcircuit.to_gate(label='U_f2')
 
-def U_f3(qc: QuantumCircuit):
-    qc.x(1)
+def U_f3():
+    subcircuit = QuantumCircuit(QuantumRegister(2))
+    subcircuit.x(1, "U_f3")
+    return subcircuit.to_gate(label='U_f3')
 
 ### VARIABLES (EDITABLE) ###
 
 # The 2-qubit unitary representing the chosen function f. Change to U_fn to change the function.
-U_f = U_f0
+U_f = U_f1
 
 enable_visualisations = True
 
@@ -80,12 +89,13 @@ visualise(qc, "Initial state is |00⟩")
 qc.x(1)
 visualise(qc, "Left bit is flipped, changing the state to |10⟩")
 
+qc.barrier()
 qc.h(0)
 qc.h(1)
 visualise(qc, "Places system in a superposition of all 4 base vector states.\n|00⟩ and |01⟩ are in phase, and |10⟩ and |11⟩ are out of phase.\nThe colours relate to the phase.\nVectors that are out-of-phase correspond to negative probability amplitudes.")
 
 # TODO: Explain this better
-U_f(qc)
+qc.append(U_f(), [0, 1])
 visualise(qc, "U_f is also known as a \"phase oracle\".\nNotice that if f is constant there is no change in phase.\nIf f is balanced then the states associated with q0=0 flip phase.\nThis is known as \"phase kickback\").")
 
 qc.h(0)
@@ -109,6 +119,6 @@ result = list(counts.keys())[0]
 print(f'Result: the function is {'balanced' if result == '1' else 'constant'}.')
 
 qc.draw(output="mpl")
-if(enable_visualisations): plt.show()
+plt.show()
 
 # This algorithm outperforms a classical computer since the oracle is only consulted once, whereas a classical computer would need to evaluate f twice (once for each input) to reach the same conclusion. However, Deutsch's algorithm does not tell us exactly which function the oracle represents - only that it is either constant or balanced.
