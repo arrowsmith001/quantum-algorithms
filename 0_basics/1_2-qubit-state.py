@@ -98,7 +98,7 @@ assert np.allclose(test_array, np.zeros((1, 4)), atol=1e-10)
 
 IxW3_inv = np.linalg.inv(IxW3)
 W2xI_inv = np.linalg.inv(W2xI)
-CZ_inv = np.conj(np.linalg.inv(CZ))
+CZ_inv = np.linalg.inv(CZ)
 W1xI_inv = np.linalg.inv(W1xI)
 
 # This is the final unitary matrix that is required to get straight to the target state *from* 00
